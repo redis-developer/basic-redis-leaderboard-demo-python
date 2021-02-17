@@ -102,7 +102,7 @@ docker network create global
 docker-compose up -d --build
 ```
 
-#### If you install redis manually open django-backend/configuration folder and copy `.env.example` to create `.env`. And provide the values for environment variables
+#### If you install redis manually open configuration folder and copy `.env.example` to create `.env`. And provide the values for environment variables
     - REDIS_URL: Redis server url
     - REDIS_HOST: Redis server host
     - REDIS_PORT: Redis server port
