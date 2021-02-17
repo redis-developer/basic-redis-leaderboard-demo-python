@@ -7,6 +7,8 @@ venv/
 __pycache__/
 *.py[cod]
 
+.DS_Store
+
 .env
 
 static_root/
