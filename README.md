@@ -85,13 +85,13 @@ Problem with unsupported flags when deploying google cloud run button
     <li>Companies between 500 billion and 1 trillion: <pre>ZCOUNT companyLeaderBoard 500000000000 1000000000000</pre></li>
 </ol>
 
-## How to run it locally?
-
 ## Development
 
 ```
 git clone 
 ```
+
+## How to run it locally?
 
 ### Run docker compose or install redis manually
 
