@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "RedisLeaderBoardPython",
+  "builds": [
+    {
+      "src": "index.py",
+      "use": "@now/python@canary",
+      "config": { "maxLambdaSize": "25mb" }
+    },{
+      "src": "now_build_staticfiles.sh",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "static_root"
+      }
+    }
+  ],
+  "routes": [{"src": "/(.*)", "dest": "/"}, {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    }
+  ]
+}

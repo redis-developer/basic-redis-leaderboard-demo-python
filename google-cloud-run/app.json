@@ -10,8 +10,8 @@
   "hooks": {
     "prebuild": {
       "commands": [
-        "echo 'prebuild'",
-        "bash prebuildRedis"
+        "echo 'build Dockerfile'",
+        "bash build_script"
       ]
     }
   }

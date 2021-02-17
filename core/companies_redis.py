@@ -1,9 +1,11 @@
 import json
 import enum
+import logging
 
 from django.conf import settings
-from redis import Redis
+from redis import Redis, RedisError, ConnectionError
 
+logger = logging.getLogger(__name__)
 
 class RankSortKeys(enum.Enum):
     ALL = 'all'
@@ -13,38 +15,46 @@ class RankSortKeys(enum.Enum):
 
 class RedisClient:
     def __init__(self):
-        if settings.REDIS_URL:
-            self.redis_client = Redis.from_url(
-                url=settings.REDIS_URL,
-                decode_responses=True
-            )
-        else:
-            self.redis_client = Redis(
-                host=settings.REDIS_HOST,
-                port=settings.REDIS_PORT,
-                password=settings.REDIS_PASSWORD,
-                db=settings.REDIS_DB,
-                decode_responses=True
-            )
+        try:
+            if settings.REDIS_URL:
+                self.redis_client = Redis.from_url(
+                    url=settings.REDIS_URL,
+                    decode_responses=True
+                )
+            else:
+                self.redis_client = Redis(
+                    host=settings.REDIS_HOST,
+                    port=settings.REDIS_PORT,
+                    password=settings.REDIS_PASSWORD,
+                    db=settings.REDIS_DB,
+                    decode_responses=True
+                )
+        except RedisError:
+            logger.error(f'Redis failed connection to {settings.REDIS_HOST}:{settings.REDIS_PORT}.')
+            return
 
     def set_init_data(self):
         with open(f'companies_data.json', 'r') as init_data:
             companies = json.load(init_data)
-            for company in companies:
-                self.redis_client.zadd(
-                    settings.REDIS_LEADERBOARD,
-                    {
-                        company.get('symbol').lower(): company.get('marketCap')
-                    }
-                )
+            try:
+                for company in companies:
+                    self.redis_client.zadd(
+                        settings.REDIS_LEADERBOARD,
+                        {
+                            company.get('symbol').lower(): company.get('marketCap')
+                        }
+                    )
 
-                self.redis_client.hset(
-                    company.get('symbol').lower(),
-                    mapping={
-                        'company': company.get('company'),
-                        'country': company.get('country')
-                    }
-                )
+                    self.redis_client.hset(
+                        company.get('symbol').lower(),
+                        mapping={
+                            'company': company.get('company'),
+                            'country': company.get('country')
+                        }
+                    )
+            except ConnectionError:
+                logger.error(f'Redis connection time out to {settings.REDIS_HOST}:{settings.REDIS_PORT}.')
+                return
 
 
 class CompaniesRanks(RedisClient):
