@@ -1,0 +1,18 @@
+{
+  "name": "Django(python) Redis leader board",
+  "description": "Show how the redis works with Django(python)",
+  "repository": "https://github.com/",
+  "logo": "https://redis.io/images/redis-white.png",
+  "keywords": ["python", "py", "redis"],
+  "build": {
+    "skip": true
+  },
+  "hooks": {
+    "prebuild": {
+      "commands": [
+        "echo 'prebuild'",
+        "bash prebuildRedis"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euxo pipefail
+
+gcloud config set project ${GOOGLE_CLOUD_PROJECT}
+gcloud redis instances create redisdb --region ${GOOGLE_CLOUD_REGION}
+gcloud compute networks vpc-access connectors create redisdb-vpc-connector --network default --region ${GOOGLE_CLOUD_REGION} --range 10.8.0.0/28
+
+export PARENT_PATH=$(cd ../ && pwd)
+export REDIS_HOST=$(gcloud redis instances describe redisdb --region ${GOOGLE_CLOUD_REGION} --format "value(host)")
+export REDIS_PORT=$(gcloud redis instances describe redisdb --region ${GOOGLE_CLOUD_REGION} --format "value(port)")
+
+docker build -t ${IMAGE_URL} --build-arg REDIS_URL_ADDRESS=redis://${REDIS_HOST}:${REDIS_PORT} -f ${PARENT_PATH}/google-cloud-run/Dockerfile ${PARENT_PATH}

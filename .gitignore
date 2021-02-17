@@ -1,0 +1,13 @@
+### Python ###
+# Virtual enviroment
+venv/
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+.env
+
+static_root/
+
