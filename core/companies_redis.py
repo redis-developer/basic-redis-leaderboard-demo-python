@@ -47,10 +47,13 @@ class RedisClient:
 
                     self.redis_client.hset(
                         company.get('symbol').lower(),
-                        mapping={
-                            'company': company.get('company'),
-                            'country': company.get('country')
-                        }
+                        'company',
+                        company.get('company')
+                    )
+                    self.redis_client.hset(
+                        company.get('symbol').lower(),
+                        'country',
+                        company.get('country')
                     )
             except ConnectionError:
                 logger.error(f'Redis connection time out to {settings.REDIS_HOST}:{settings.REDIS_PORT}.')
@@ -92,7 +95,7 @@ class CompaniesRanks(RedisClient):
             'start': start_index,
             'end': stop_index,
             'withscores': True,
-            'score_cast_func': int,
+            'score_cast_func': str,
         }
 
         if desc:

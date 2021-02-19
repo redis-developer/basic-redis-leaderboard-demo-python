@@ -2,6 +2,7 @@ import json
 
 from django.http import HttpResponse
 from django.views import View
+from django.shortcuts import render
 
 from .companies_redis import CompaniesRanks
 
@@ -35,3 +36,8 @@ class ResetInitDataView(View):
     def get(self, request):
         CompaniesRanks().set_init_data()
         return HttpResponse(json.dumps({'success': True}), status=200)
+
+
+def index(request):
+    context = {}
+    return render(request, 'index.html', context)

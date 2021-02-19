@@ -8,7 +8,7 @@
       "config": { "maxLambdaSize": "25mb" }
     },{
       "src": "now_build_staticfiles.sh",
-      "use": "@now/static-build",
+      "use": "@vercel/static-build",
       "config": {
         "distDir": "static_root"
       }

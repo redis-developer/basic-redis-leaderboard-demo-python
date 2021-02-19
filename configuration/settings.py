@@ -52,11 +52,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'configuration.urls'
@@ -64,8 +62,9 @@ ROOT_URLCONF = 'configuration.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -104,15 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REDIS_LEADERBOARD = "REDIS_LEADERBOARD"
-
-REDIS_HOST = os.getenv("REDIS_HOST", '127.0.0.1')
-REDIS_PORT = os.getenv("REDIS_PORT", '6379')
-REDIS_DB = os.getenv("REDIS_DB", '0')
-REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None)
-REDIS_URL = os.environ.get('REDIS_URL', None)
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -136,5 +126,13 @@ STATICFILES_DIR = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
-WHITENOISE_INDEX_FILE = True
-WHITENOISE_ROOT = os.path.join(STATIC_ROOT)
+
+REDIS_LEADERBOARD = "REDIS_LEADERBOARD"
+
+REDIS_HOST = os.getenv("REDIS_HOST", '127.0.0.1')
+REDIS_PORT = os.getenv("REDIS_PORT", '6379')
+REDIS_DB = os.getenv("REDIS_DB", '0')
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None)
+REDIS_URL = os.environ.get('REDIS_URL', None)
+
+CSRF_COOKIE_HTTPONLY = False
