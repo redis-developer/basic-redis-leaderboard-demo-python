@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG", False)
+DEBUG = os.getenv('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ['127.0.0.1', 'localhost', '.vercel.app', 'a.run.app', '.a.run.app', '.herokuapp.com'])
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ['127.0.0.1', 'localhost', '.vercel.app', 'a.run.app', '.a.run.app', '.herokuapp.com'])
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -127,11 +127,11 @@ STATICFILES_DIR = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
 
-REDIS_LEADERBOARD = "REDIS_LEADERBOARD"
+REDIS_LEADERBOARD = 'REDIS_LEADERBOARD'
 
-REDIS_HOST = os.getenv("REDIS_HOST", '127.0.0.1')
-REDIS_PORT = os.getenv("REDIS_PORT", '6379')
-REDIS_DB = os.getenv("REDIS_DB", '0')
+REDIS_HOST = os.getenv('REDIS_HOST', '127.0.0.1')
+REDIS_PORT = os.getenv('REDIS_PORT', '6379')
+REDIS_DB = os.getenv('REDIS_DB', '0')
 REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None)
 REDIS_URL = os.environ.get('REDIS_URL', None)
 
