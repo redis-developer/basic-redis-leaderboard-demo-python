@@ -56,7 +56,11 @@ class RedisClient:
                         company.get('country')
                     )
             except ConnectionError:
-                logger.error(f'Redis connection time out to {settings.REDIS_HOST}:{settings.REDIS_PORT}.')
+                if settings.REDIS_URL:
+                    error_message = f'Redis connection time out to {settings.REDIS_URL}.'
+                else:
+                    error_message = f'Redis connection time out to {settings.REDIS_HOST}:{settings.REDIS_PORT}.'
+                logger.error(error_message)
                 return
 
 
