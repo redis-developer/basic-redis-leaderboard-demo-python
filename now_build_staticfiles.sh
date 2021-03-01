@@ -12,4 +12,4 @@ python3.6 get-pip.py
 pip3 install -r google-cloud-run/requirements.txt
 
 # Build staticfiles
-python3.6 manage.py collectstatic
+python3.6 server/manage.py collectstatic

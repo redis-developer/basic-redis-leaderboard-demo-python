@@ -23,6 +23,6 @@ ENV PORT 8080
 # promptly appear in Cloud Logging.
 ENV PYTHONUNBUFFERED TRUE
 
-RUN python3 manage.py collectstatic
+RUN python3 server/manage.py collectstatic
 
-CMD exec python3 manage.py runserver 0.0.0.0:$PORT
+CMD exec python3 server/manage.py runserver 0.0.0.0:$PORT

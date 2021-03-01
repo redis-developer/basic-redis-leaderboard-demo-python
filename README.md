@@ -122,6 +122,6 @@ Use python version: 3.9.1
 python3 -m venv venv
 source ./venv/bin/activate
 pip3 install -r requirements.txt
-python3 manage.py collectstatic
-python3 manage.py runserver
+python3 server/manage.py collectstatic
+python3 server/manage.py runserver
 ```

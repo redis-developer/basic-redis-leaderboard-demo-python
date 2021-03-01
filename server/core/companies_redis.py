@@ -1,3 +1,4 @@
+import os
 import json
 import enum
 import logging
@@ -34,7 +35,7 @@ class RedisClient:
             return
 
     def set_init_data(self):
-        with open(f'companies_data.json', 'r') as init_data:
+        with open(os.path.join(settings.BASE_DIR, 'companies_data.json'), 'r') as init_data:
             companies = json.load(init_data)
             try:
                 for company in companies:
