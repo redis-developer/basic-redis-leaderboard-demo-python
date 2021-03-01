@@ -26,9 +26,10 @@ class GetBySymbolCompaniesView(View):
 
 
 class UpdateCompanyView(View):
-    def patch(self, request):
-        company = json.loads(request.body)
-        CompaniesRanks().update_company_market_capitalization(company.get('amount'), company.get('symbol'))
+    def get(self, request):
+        amount = request.GET.get('amount')
+        symbol = request.GET.get('symbol')
+        CompaniesRanks().update_company_market_capitalization(amount, symbol)
         return HttpResponse(json.dumps({'success': True}), status=200)
 
 

@@ -38,20 +38,21 @@ class RedisClient:
             companies = json.load(init_data)
             try:
                 for company in companies:
+                    symbol = self.add_prefix_to_symbol(settings.REDIS_PREFIX, company.get('symbol').lower())
                     self.redis_client.zadd(
                         settings.REDIS_LEADERBOARD,
                         {
-                            company.get('symbol').lower(): company.get('marketCap')
+                            symbol: company.get('marketCap')
                         }
                     )
 
                     self.redis_client.hset(
-                        company.get('symbol').lower(),
+                        symbol,
                         'company',
                         company.get('company')
                     )
                     self.redis_client.hset(
-                        company.get('symbol').lower(),
+                        symbol,
                         'country',
                         company.get('country')
                     )
@@ -63,10 +64,18 @@ class RedisClient:
                 logger.error(error_message)
                 return
 
+    @staticmethod
+    def add_prefix_to_symbol(prefix, symbol):
+        return f"{prefix}:{symbol}"
+
+    @staticmethod
+    def remove_prefix_to_symbol(prefix, symbol):
+        return symbol.replace(f'{prefix}:', '')
+
 
 class CompaniesRanks(RedisClient):
     def update_company_market_capitalization(self, amount, symbol):
-        self.redis_client.zincrby(settings.REDIS_LEADERBOARD, amount, symbol)
+        self.redis_client.zincrby(settings.REDIS_LEADERBOARD, amount, self.add_prefix_to_symbol(settings.REDIS_PREFIX, symbol))
 
     def get_ranks_by_sort_key(self, key):
         sort_key = RankSortKeys(key)
@@ -80,14 +89,14 @@ class CompaniesRanks(RedisClient):
     
     def get_ranks_by_symbols(self, symbols):
         companies_capitalization = [
-            self.redis_client.zscore(settings.REDIS_LEADERBOARD, symbol)
+            self.redis_client.zscore(settings.REDIS_LEADERBOARD, self.add_prefix_to_symbol(settings.REDIS_PREFIX, symbol))
             for symbol in symbols
         ]
         companies = []
 
         for index, market_capitalization in enumerate(companies_capitalization):
             companies.append([
-                symbols[index],
+                self.add_prefix_to_symbol(settings.REDIS_PREFIX, symbols[index]),
                 market_capitalization
             ])
 
@@ -124,7 +133,7 @@ class CompaniesRanks(RedisClient):
                     'country': company_info['country'],
                     'marketCap': market_cap,
                     'rank': start_rank,
-                    'symbol': symbol
+                    'symbol': self.remove_prefix_to_symbol(settings.REDIS_PREFIX, symbol)
                 }
             )
             start_rank += increase_factor
