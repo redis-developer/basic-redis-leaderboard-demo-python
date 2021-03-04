@@ -84,7 +84,7 @@ Problem with unsupported flags when deploying google cloud run button
 
 ## How to run it locally?
 
-## Development
+### Development
 
 ```
 git clone https://github.com/redis-developer/basic-redis-leaderboard-demo-python.git
