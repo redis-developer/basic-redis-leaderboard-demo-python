@@ -1,14 +1,10 @@
-
 # Basic Redis Leaderboard Demo Python
 
 Show how the redis works with Python, Django.
 
-## Screenshots
-
 ![How it works](docs/screenshot001.png)
 
 ## Try it out
-
 
 <p>
     <a href="https://heroku.com/deploy" target="_blank">
@@ -91,10 +87,8 @@ Problem with unsupported flags when deploying google cloud run button
 ## Development
 
 ```
-git clone 
+git clone https://github.com/redis-developer/basic-redis-leaderboard-demo-python.git
 ```
-
-## How to run it locally?
 
 ### Run docker compose or install redis manually
 
@@ -105,7 +99,7 @@ docker network create global
 docker-compose up -d --build
 ```
 
-#### If you install redis manually open configuration folder and copy `.env.example` to create `.env`. And provide the values for environment variables
+#### Open directory server (cd server/configuration): copy .env.example to create .env (copy .env.example .env  or cp .env.example .env). And provide the values for environment variables (if needed)
     - DJANGO_DEBUG: Django debug mode
     - DJANGO_ALLOWED_HOSTS: Allowed hosts
     - REDIS_URL: Redis server url
@@ -114,10 +108,12 @@ docker-compose up -d --build
     - REDIS_DB: Redis server db index
     - REDIS_PASSWORD: Redis server password
 
-#### Setup and run
+#### Run backend
+
 Install python, pip and venv (on mac: https://installpython3.com/mac/)
 
 Use python version: 3.9.1
+
 ``` sh
 python3 -m venv venv
 source ./venv/bin/activate
@@ -125,3 +121,7 @@ pip3 install -r requirements.txt
 python3 server/manage.py collectstatic
 python3 server/manage.py runserver
 ```
+
+#### Run frontend
+
+Static сontent runs automatically with the backend part. In case you need to run it separately, please see README in the [client](client) folder.
