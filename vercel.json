@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "name": "RedisRateLimitingPython",
+  "builds": [{
+    "src": "server/index.py",
+    "use": "@vercel/python",
+    "config": {
+      "maxLambdaSize": "25mb"
+    }
+  }, {
+    "src": "now_build_staticfiles.sh",
+    "use": "@vercel/static-build",
+    "config": {
+      "distDir": "server/static_root"
+    }
+  }],
+  "routes": [{
+      "src": "/api/rank/(.*)",
+      "dest": "server/index.py"
+    },
+    {
+      "src": "/api/list/(.*)",
+      "dest": "server/index.py"
+    }
+  ]
+}
