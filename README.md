@@ -6,7 +6,7 @@
 
 # Basic Redis Leaderboard Demo Python (Django)
 
-Show how the redis works with Python, Django.
+Show how the redis works with Python (Django).
 
 ![How it works](docs/screenshot001.png)
 
