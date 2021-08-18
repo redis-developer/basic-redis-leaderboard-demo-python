@@ -21,13 +21,13 @@
   ],
   "language": ["Python"],
   "redis_commands": ["HSET", "ZADD", "ZREVRANGE", "ZRANGE", "ZREVRANGE", "ZSCORE", "ZINCRBY", "ZCOUNT"],
-  "redis_features": ["leaderboard"],
+  "redis_features": ["Leaderboard"],
   "redis_modules": [],
   "app_image_urls": [
       "https://github.com/redis-developer/basic-redis-leaderboard-demo-python/blob/master/docs/screenshot001.png?raw=true"
   ],
   "youtube_url": "https://www.youtube.com/watch?v=zzinHxdZ34I",
   "special_tags": [],
-  "verticals": ["Financial"],
+  "verticals": ["Gaming"],
   "markdown": "https://raw.githubusercontent.com/redis-developer/basic-redis-leaderboard-demo-python/master/README.md"
 }
